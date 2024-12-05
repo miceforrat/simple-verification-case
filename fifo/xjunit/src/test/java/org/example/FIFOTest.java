@@ -26,16 +26,18 @@ public class FIFOTest {
         random.setSeed(System.currentTimeMillis());
         for (int i = 0; i < 100000; i++){
             int choice = random.nextInt(3);
-            boolean write = (cur == EMPTY || cur < FULL && choice > 0);
+            boolean write = (cur == EMPTY || (cur < FULL && choice > 0));
             int rand = random.nextInt(256);
             if (write) {
                 FIFOWriteRet expect = fifo.write(rand);
                 FIFOWriteRet actual = ref.write(rand);
                 assertEquals(expect, actual);
+                cur++;
             } else {
                 FIFOReadRet expect = fifo.read();
                 FIFOReadRet actual = ref.read();
                 assertEquals(expect, actual);
+                cur--;
             }
         }
     }

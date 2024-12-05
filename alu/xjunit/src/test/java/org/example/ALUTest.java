@@ -20,7 +20,7 @@ public class ALUTest {
 
         for (int a = 0; a < 256; a++){
             for (int b = 0; b < 256; b++){
-                assertEquals((a+b) & limit, alu.process(a, b, 0).intValue());
+                assertEquals((a+b) & limit, alu.process(a, b, 0));
             }
         }
 
@@ -32,7 +32,7 @@ public class ALUTest {
         for (int a = 0; a < 256; a++){
             for (int b = 0; b < 256; b++){
                 for (int c = 0; c < 16; c++){
-                    assertEquals(refModel(a, b, c), alu.process(a, b, c).intValue());
+                    assertEquals(refModel(a, b, c), alu.process(a, b, c));
                 }
             }
         }
@@ -46,7 +46,7 @@ public class ALUTest {
             int a = random.nextInt(0, 256);
             int b = random.nextInt(0, 256);
             int c = random.nextInt(0, 16);
-            assertEquals(refModel(a, b, c), alu.process(a, b, c).intValue());
+            assertEquals(refModel(a, b, c), alu.process(a, b, c));
         }
     }
 
@@ -54,43 +54,26 @@ public class ALUTest {
 
 
     private int refModel(int a, int b, int sel){
-        switch (sel){
-            case 0b0000:
-                return (a + b)&limit ;
-            case 0b0001:
-                return (a - b)&limit;
-            case 0b0010:
-                return (a * b)&limit;
-            case 0b0011:
-                return b != 0 ? a / b : 0;
-            case 0b0100:
-                return (a << 1)&limit;
-            case 0b0101:
-                return (a >> 1)&limit;
-            case 0b0110:
-                return ((a << 1) | (a >> 7)) & limit;
-            case 0b0111:
-                return ((a >> 1) | (a << 7)) & limit;
-            case 0b1000:
-                return a & b;
-            case 0b1001:
-                return a | b;
-            case 0b1010:
-                return a ^ b;
-            case 0b1011:
-                return ~(a | b) & limit;
-            case 0b1100:
-                return ~(a & b) & limit;
-            case 0b1101:
-                return ~(a ^ b) & limit;
-            case 0b1110:
-                return a > b ? 1 : 0;
-            case 0b1111: // Equality
-                return a == b ? 1 : 0;
-            default:
-                return (a+b) & limit;
-                    
-        }
+        return switch (sel) {
+            case 0b0000 -> (a + b) & limit;
+            case 0b0001 -> (a - b) & limit;
+            case 0b0010 -> (a * b) & limit;
+            case 0b0011 -> b != 0 ? a / b : 0;
+            case 0b0100 -> (a << 1) & limit;
+            case 0b0101 -> (a >> 1) & limit;
+            case 0b0110 -> ((a << 1) | (a >> 7)) & limit;
+            case 0b0111 -> ((a >> 1) | (a << 7)) & limit;
+            case 0b1000 -> a & b;
+            case 0b1001 -> a | b;
+            case 0b1010 -> a ^ b;
+            case 0b1011 -> ~(a | b) & limit;
+            case 0b1100 -> ~(a & b) & limit;
+            case 0b1101 -> ~(a ^ b) & limit;
+            case 0b1110 -> a > b ? 1 : 0;
+            case 0b1111 -> // Equality
+                    a == b ? 1 : 0;
+            default -> (a + b) & limit;
+        };
 //        if sel == 0b0000:  # Addition
 //                result = (a + b) & 0xFF
 //        elif sel == 0b0001:  # Subtraction

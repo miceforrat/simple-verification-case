@@ -7,6 +7,7 @@ public class FIFOWrapper {
     FIFOWrapper(){
         fifo.InitClock("clk");
         fifo.rst_n.Set(1);
+//        fifo.Step();
     }
 
     public FIFOWriteRet write(int wdata){
@@ -21,6 +22,7 @@ public class FIFOWrapper {
         fifo.rd_en.Set(1);
         fifo.Step();
         fifo.rd_en.Set(0);
+        fifo.Step();
         return new FIFOReadRet(fifo.rdata.U().intValue(), fifo.empty.U().intValue(), fifo.full.U().intValue());
     }
 

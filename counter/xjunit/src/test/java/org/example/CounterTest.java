@@ -29,7 +29,7 @@ public class CounterTest {
                 ref.reset();
                 counter.reset();
             } else {
-                assertEquals(ref.tick(), counter.tick().intValue());
+                assertEquals(ref.tick(), counter.tick());
             }
         }
     }

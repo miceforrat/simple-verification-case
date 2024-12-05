@@ -1,11 +1,6 @@
 package org.example;
 import com.ut.UT_Counter;
 
-import java.math.BigInteger;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 
 public class CounterDriver {
     private UT_Counter dut = new UT_Counter();
@@ -14,9 +9,9 @@ public class CounterDriver {
         dut.InitClock("clk");
     }
 
-    public BigInteger tick(){
+    public int tick(){
         dut.Step();
-        return dut.count.U64();
+        return dut.count.U64().intValue();
     }
 
     public void reset(){
@@ -24,9 +19,5 @@ public class CounterDriver {
         dut.Step();
         dut.rst.Set(0);
     }
-
-
-
-
 }
 
