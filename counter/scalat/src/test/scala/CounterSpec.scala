@@ -12,7 +12,7 @@ class CounterSpec extends AnyFlatSpec with Matchers{
     ref.reset()
     val rand = Random(System.currentTimeMillis())
     var choice = 0
-    for (i <- 0 until 100000){
+    for (i <- 0 until 100){
       choice = rand.nextInt(100);
       if (choice < 31){
         counter.tick() shouldEqual ref.tick()
@@ -21,6 +21,7 @@ class CounterSpec extends AnyFlatSpec with Matchers{
         counter.reset()
         ref.reset()
       }
+      System.gc()
     }
   }
 

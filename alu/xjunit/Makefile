@@ -28,7 +28,7 @@ dut:
 	cp -r picker_out_$(NAME_L)/*.jar ./$(LIB_DIR)
 
 run:
-	@mvn test
+	@mvn clean test
 
 clean:
 	rm -rf picker_out_$(NAME_L)

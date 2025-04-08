@@ -4,6 +4,8 @@ import java.math.BigInteger;
 
 class ALUWrapper {
     private val alu = new UT_ALU()
+    alu.SetWaveform("ALU.fst")
+    alu.SetCoverage("ALU.dat")
 
     def process(a: Int, b: Int, sel: Int): Int = {
       alu.a.Set(a)

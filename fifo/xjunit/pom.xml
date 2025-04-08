@@ -46,8 +46,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <skipTests>false</skipTests>
+                    <parallel>method</parallel>
                     <!--                    <testFailureIgnore>true</testFailureIgnore>-->
-                    <forkCount>0</forkCount>
+
                 </configuration>
             </plugin>
 
