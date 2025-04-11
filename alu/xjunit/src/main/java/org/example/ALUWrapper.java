@@ -2,6 +2,7 @@ package org.example;
 import com.ut.UT_ALU;
 
 import java.math.BigInteger;
+import java.util.concurrent.Semaphore;
 import java.util.function.Consumer;
 
 public class ALUWrapper {
@@ -10,13 +11,15 @@ public class ALUWrapper {
     UT_ALU alu;
 
     ALUWrapper(){
-        alu = new UT_ALU();
+//        alu = new UT_ALU();
         System.out.println("new alu wrapper");
 //        alu.InitClock("");
-
-//        new Thread(() -> {
-//            alu = new UT_ALU();
-//        }).run();
+        Semaphore semaphore = new Semaphore(0);
+        new Thread(() -> {
+            alu = new UT_ALU();
+            semaphore.release(); 
+        }).start();
+        semaphore.acquireUninterruptibly();
 //        alu.StepRis(new Consumer<Long>() {
 //            @Override
 //            public void accept(Long aLong) {
