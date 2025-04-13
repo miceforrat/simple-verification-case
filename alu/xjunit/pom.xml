@@ -30,6 +30,18 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/xspcomm-java.jar</systemPath>
         </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>32.1.0-jre</version>
+            </dependency>
+
+            <dependency>
+                <groupId>co.paralleluniverse</groupId>
+                <artifactId>quasar-core</artifactId>
+                <version>0.8.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -47,16 +59,44 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <skipTests>false</skipTests>
+                    <argLine>-javaagent:${project.basedir}/quasar-core-0.8.0.jar</argLine>
 <!--                    <argLine>-Xms512m -Xmx2g</argLine>-->
-<!--                    <threadCount>19</threadCount>-->
-<!--                    <parallel>methods</parallel>-->
-<!--                    <useUnlimitedThreads>true</useUnlimitedThreads>-->
-<!--                    <parallel>none</parallel>-->
-<!--                    <forkCount>0</forkCount>-->
                 </configuration>
 
-                </plugin>
+            </plugin>
 
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId> <!-- Run with "mvn compile maven-dependency-plugin:properties exec:exec" -->
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>org.example.CoroutineMain</mainClass>
+<!--                    <workingDirectory>target/classes</workingDirectory>-->
+                    <executable>java</executable>
+
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>org.example.CoroutineMain</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
