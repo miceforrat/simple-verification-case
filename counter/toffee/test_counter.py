@@ -7,7 +7,7 @@ import toffee_test
 @toffee_test.testcase
 async def test_counter(counter_env: CounterEnv):
     await counter_env.counter_agent.reset()
-    for _ in range(10000):
+    for _ in range(50000):
         if not randint(0, 10):
             await counter_env.counter_agent.reset()
         else:

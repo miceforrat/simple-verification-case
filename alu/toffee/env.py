@@ -14,7 +14,7 @@ class ALUAgent(Agent):
 
 class ALUModel(Model):
     @driver_hook(agent_name="alu_agent")
-    async def calc(self, a, b, sel):
+    def calc(self, a, b, sel):
         # Ensure inputs are 8-bit
         a &= 0xFF
         b &= 0xFF

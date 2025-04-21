@@ -8,7 +8,7 @@ TARGET_LANG = python
 NAME_L = $(shell echo $(TOP_MODULE) | tr A-Z a-z)
 
 run:
-	pytest -sv .
+	pytest -sv . -n auto
 
 dut:
 	$(PICKER) export --autobuild=true $(VSRC_DIR)/$(VSRC_NAME).v \

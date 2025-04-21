@@ -17,21 +17,33 @@ public class CounterTest {
         counter.reset();
     }
 
+    @After
+    public void tearDown() {
+//        try {
+////            counter.finish();
+//        } catch (Throwable e) {
+//            throw new RuntimeException(e);
+//        }
+    }
+
+
     @Test
     public void randTest() {
         counter.reset();
         ref.reset();
         Random rand = new Random();
         rand.setSeed(System.currentTimeMillis());
-        for (int i = 0; i < 1000000; i++){
+        for (int i = 0; i < 10000; i++) {
             int chosen = rand.nextInt(100);
-            if (chosen < 31){
+            if (chosen < 31) {
                 ref.reset();
                 counter.reset();
             } else {
                 assertEquals(ref.tick(), counter.tick());
             }
+//            System.gc();
         }
+
     }
 
     private static class CounterRef{

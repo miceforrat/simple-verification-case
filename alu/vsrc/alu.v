@@ -2,7 +2,7 @@ module ALU(
 	input  [7:0] a,
 	input  [7:0] b,				//alu数据输入
 	input  [3:0] alu_sel,		//功能选择
-	output [7:0] alu_out,		//数据输出
+	output [7:0] alu_out		//数据输出
 );
 
 reg 	[7:0]	result;				//寄存运算结果
